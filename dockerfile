@@ -12,6 +12,7 @@ EXPOSE 8000/tcp
 EXPOSE 9000/udp
 
 # ADD sources.list /etc/apt/sources.list
+RUN sed -i "s/archive.ubuntu.com/mirrors.aliyun.com/g" /etc/apt/sources.list
 
 RUN apt-get update && \
          DEBIAN_FRONTEND="noninteractive" \
@@ -59,7 +60,7 @@ FROM ubuntu:20.04
 ARG MODEL
 
 # ADD sources.list /etc/apt/sources.list
-
+RUN sed -i "s/archive.ubuntu.com/mirrors.aliyun.com/g" /etc/apt/sources.list
 RUN apt-get update && \
          DEBIAN_FRONTEND="noninteractive" \
          apt-get install -y --no-install-recommends \
