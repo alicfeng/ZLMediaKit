@@ -9,6 +9,8 @@ EXPOSE 443/tcp
 EXPOSE 10000/udp
 EXPOSE 10000/tcp
 
+RUN sed -i "s/archive.ubuntu.com/mirrors.aliyun.com/g" /etc/apt/sources.list
+
 RUN apt-get update && \
          DEBIAN_FRONTEND="noninteractive" \
          apt-get install -y --no-install-recommends \
@@ -31,7 +33,7 @@ RUN apt-get update && \
 RUN mkdir -p /opt/media
 
 WORKDIR /opt/media
-RUN git clone --depth=1 https://github.com/ZLMediaKit/ZLMediaKit && \
+RUN git clone --depth=1 https://github.com/alicfeng/ZLMediaKit && \
     cd ZLMediaKit && git submodule update --init --recursive && \
     mkdir -p build release/linux/Release/
 
@@ -41,7 +43,7 @@ RUN cmake -DCMAKE_BUILD_TYPE=Release .. && \
 
 FROM ubuntu:18.04
 LABEL maintainer "Gemfield <gemfield@civilnet.cn>"
-
+RUN sed -i "s/archive.ubuntu.com/mirrors.aliyun.com/g" /etc/apt/sources.list
 RUN apt-get update && \
          DEBIAN_FRONTEND="noninteractive" \
          apt-get install -y --no-install-recommends \

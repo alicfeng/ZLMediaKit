@@ -113,6 +113,11 @@ bool RtpProcess::inputRtp(bool is_udp, const Socket::Ptr &sock, const char *data
         _last_frame_time.resetTime();
         return false;
     }
+    if (data[12] == '\r'){
+      memmove((char *) data + 1,data,12 );
+      data += 1;
+      len -= 1;
+    }
 
     bool ret = _process ? _process->inputRtp(is_udp, data, len) : false;
     if (dts_out) {
